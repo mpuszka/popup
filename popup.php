@@ -87,13 +87,15 @@ class Popup extends Module
      */
     public function hookHeader(array $params): ?string
     {   
-        $this->context->smarty->assign([
-                'title'     => Configuration::get('title'),
-                'text'      => Configuration::get('text'),
-                'bgColor'   => Configuration::get('bg-color'),
-                'startDate' => Configuration::get('start-date'),
-                'endDate'   => Configuration::get('end-date')
-        ]);
+        $this->context
+                ->smarty
+                ->assign([
+                    'title'     => Configuration::get('title'),
+                    'text'      => Configuration::get('text'),
+                    'bgColor'   => Configuration::get('bg-color'),
+                    'startDate' => Configuration::get('start-date'),
+                    'endDate'   => Configuration::get('end-date')
+                ]);
         
         $selectedProducts = (Configuration::get('selected')) ? explode(',', Configuration::get('selected')) : Configuration::get('selected');
 
@@ -107,8 +109,13 @@ class Popup extends Module
 
                 if (in_array($productId, $selectedProducts)) 
                 {
-                    $this->context->controller->addCSS($this->_path . '/public/css/popup.css', 'all');
-                    $this->context->controller->addJS($this->_path . '/public/js/all-min.js');
+                    $this->context
+                            ->controller
+                            ->addCSS($this->_path . '/public/css/popup.css', 'all');
+
+                    $this->context
+                            ->controller
+                            ->addJS($this->_path . '/public/js/all-min.js');
 
                     return $this->display(__FILE__, 'popup.tpl');
                 }
